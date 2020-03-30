@@ -1,0 +1,12 @@
+{
+  "HALClient": {
+    "port": 12,
+    "host": "localhost"
+  },
+   "SQL": {
+    "host": "localhost",
+    "database": "sql",
+    "user": "root",
+    "password": ""
+  }
+}
