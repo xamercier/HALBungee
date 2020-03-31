@@ -124,7 +124,7 @@ public class Client extends Thread {
 							ServerInfo serverInfo = HALBungee.getInstance().getProxy().constructServerInfo(name,
 									InetSocketAddress.createUnresolved(ip, port), serverType, false);
 							HALBungee.getInstance().getProxy().getServers().put(serverInfo.getName(), serverInfo);
-							HALBungee.getInstance().getSQL().addServer(serverType, portString, "", 0);
+							HALBungee.getInstance().getSQL().addServer(serverType, portString, "STARTING", 0);
 							break;
 						}
 						case "unregister": {

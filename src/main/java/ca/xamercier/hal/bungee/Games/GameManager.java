@@ -7,7 +7,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public enum GameManager {
 	
-	hub(false, "hub", 20, "hub_", "hub", "HikaBrain"),
+	hub(false, "hub", 20, "hub_", "hub", "Hub"),
 	HikaBrain1v1(true, "HikaBrain1v1", 2, "HikaBrain1v1_", "InGame", "HikaBrain"),
 	HikaBrain2v2(true, "HikaBrain2v2", 4, "HikaBrain2v2_", "InGame", "HikaBrain");
 	
