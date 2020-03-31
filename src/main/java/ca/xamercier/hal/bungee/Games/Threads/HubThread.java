@@ -26,6 +26,15 @@ public class HubThread extends Thread {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+		JSONObject initHub = new JSONObject();
+		initHub.put("action", "start");
+		initHub.put("serverType", "hub");
+		MainHalClientThread.getClient().send(initHub.toString());
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		while (true) {
 			ArrayList<String> Hubs = new ArrayList<String>();
 			Hubs.clear();
