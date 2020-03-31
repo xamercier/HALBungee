@@ -84,7 +84,7 @@ public class HikaBrain1v1Thread extends Thread {
 					String srvState = HALBungee.getInstance().getSQL().getState(Integer.parseInt(srvPort));
 					if (srvState.equalsIgnoreCase("WAITING")) {
 						DisponibleGames.add(srvPort);
-					} else if (srvState.equalsIgnoreCase("")) {
+					} else if (srvState.equalsIgnoreCase("BOOTING")) {
 						NotReadyGames.add(srvPort);
 					} else {
 						StartedGames.add(srvPort);

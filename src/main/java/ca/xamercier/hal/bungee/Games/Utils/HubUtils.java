@@ -21,7 +21,7 @@ public class HubUtils {
 		while (entries.hasNext()) {
 			Map.Entry entry = (Map.Entry) entries.next();
 			String name = (String) entry.getKey();
-			if (name.contains("hub_")) {
+			if (name.contains("hub_") && HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 15) {
 				return name;
 			}
 		}
