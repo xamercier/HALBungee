@@ -81,19 +81,30 @@ public class HubThread extends Thread {
 				System.out.println("STARTING A HUB");
 			} else if (Hubs.size() > howmanyhubsINTEGER) {
 				Boolean hasOneClosed = false;
+				boolean isAHubNotStarted = false;
 				for (String port : Hubs) {
-					if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size() == 0
-							&& hasOneClosed == false && HALBungee.getInstance().getSQL()
-									.getState(Integer.parseInt(port)).equalsIgnoreCase("online")) {
-						JSONObject stopOnSpigot = new JSONObject();
-						stopOnSpigot.put("action", "stop");
-						stopOnSpigot.put("serverPortOrName", port);
-						MainHalClientThread.getClient().send(stopOnSpigot.toString());
-						hasOneClosed = true;
-						System.out.println("STOPPING A HUB");
-						break;
+					if (HALBungee.getInstance().getSQL().getState(Integer.parseInt(port)).equalsIgnoreCase("online")) {
+					} else {
+						isAHubNotStarted = true;
 					}
 				}
+				if (isAHubNotStarted == false) {
+					for (String port : Hubs) {
+						if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size() == 0
+								&& hasOneClosed == false && HALBungee.getInstance().getSQL()
+										.getState(Integer.parseInt(port)).equalsIgnoreCase("online")) {
+							JSONObject stopOnSpigot = new JSONObject();
+							stopOnSpigot.put("action", "stop");
+							stopOnSpigot.put("serverPortOrName", port);
+							MainHalClientThread.getClient().send(stopOnSpigot.toString());
+							hasOneClosed = true;
+							System.out.println("STOPPING A HUB");
+							break;
+						}
+					}
+
+				}
+
 			}
 		}
 
