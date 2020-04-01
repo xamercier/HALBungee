@@ -21,13 +21,20 @@ public class HubUtils {
 		while (entries.hasNext()) {
 			Map.Entry entry = (Map.Entry) entries.next();
 			String name = (String) entry.getKey();
-			String[] nameANDport;
-			String srvPort;
-			nameANDport = name.split("_");
-			srvPort = nameANDport[1];
-			if (name.contains("hub_") && HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 15
-					&& HALBungee.getInstance().getSQL().getState(Integer.parseInt(srvPort)).equalsIgnoreCase("online")) {
-				return name;
+			if (name.contains("hub_")) {
+				String splittedName = name;
+				String[] nameANDport;
+				String srvPort;
+				nameANDport = splittedName .split("_");
+				srvPort = nameANDport[1];
+				if (name.contains("hub_")
+						&& HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 15
+						&& HALBungee.getInstance().getSQL().getState(Integer.parseInt(srvPort))
+								.equalsIgnoreCase("online")) {
+					return name;
+				}
+			} else {
+				System.out.println("CRITICAL ERROR HubUtils");
 			}
 		}
 		return null;
