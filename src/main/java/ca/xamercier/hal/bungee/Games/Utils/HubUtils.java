@@ -21,10 +21,11 @@ public class HubUtils {
 		while (entries.hasNext()) {
 			Map.Entry entry = (Map.Entry) entries.next();
 			String name = (String) entry.getKey();
-				String splittedName = name;
-				String[] nameANDport;
-				String srvPort;
-				nameANDport = splittedName .split("_");
+			String splittedName = name;
+			String[] nameANDport;
+			String srvPort;
+			if (name.contains("_")) {
+				nameANDport = splittedName.split("_");
 				srvPort = nameANDport[1];
 				if (name.contains("hub_")
 						&& HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 15
@@ -32,6 +33,7 @@ public class HubUtils {
 								.equalsIgnoreCase("online")) {
 					return name;
 				}
+			}
 		}
 		return null;
 	}
