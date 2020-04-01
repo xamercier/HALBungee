@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import ca.xamercier.hal.bungee.HALBungee;
 import ca.xamercier.hal.bungee.halClient.thread.MainHalClientThread;
 import net.md_5.bungee.api.config.ServerInfo;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * This file is a part of the HAL project
@@ -35,17 +34,10 @@ public class HubThread extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		while (true) {
 			ArrayList<String> Hubs = new ArrayList<String>();
 			Hubs.clear();
-			ArrayList<String> CompHubs = new ArrayList<String>();
-			CompHubs.clear();
-			boolean needCompHub = false;
-			int howManymoreHubs = 0;
-			int triedHub = 0;
-			int failedHub = 0;
-			int loop = Hubs.size();
-			int tour = 0;
 			Map<String, ServerInfo> map = HALBungee.getInstance().getProxy().getServers();
 			Iterator<Entry<String, ServerInfo>> entries = map.entrySet().iterator();
 			while (entries.hasNext()) {
@@ -62,71 +54,44 @@ public class HubThread extends Thread {
 					Hubs.add(srvPort);
 				}
 			}
-			
-			if (Hubs.size() == 0) {
+			int playersInHubs = 0;
+			for (String port : Hubs) {
+				playersInHubs = playersInHubs
+						+ HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size();
+			}
+			double howmanyhubs;
+			howmanyhubs = playersInHubs * 1.6;
+			howmanyhubs = howmanyhubs / 15;
+			howmanyhubs = howmanyhubs + 1;
+			System.out.println("howmanyhubs: " + howmanyhubs);
+			int howmanyhubsINTEGER = (int) Math.ceil(howmanyhubs);
+			System.out.println("howmanyhubsINTEGER: " + howmanyhubsINTEGER);
+			if (Hubs.size() == howmanyhubsINTEGER) {
+				continue;
+			} else if (Hubs.size() < howmanyhubsINTEGER) {
 				JSONObject startServer = new JSONObject();
 				startServer.put("action", "start");
 				startServer.put("serverType", "hub");
 				MainHalClientThread.getClient().send(startServer.toString());
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				continue;
-			}
-			
-			for (String port : Hubs) {
-				if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size() > 15) {
-					needCompHub = true;
-					for (String port1 : Hubs) {
-						if (!port1.equalsIgnoreCase(port)) {
-							if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port1).getPlayers().size()
-									+ 5 < 15) {
-								triedHub++;
-								CompHubs.add(port1);
-								ArrayList<ProxiedPlayer> players = new ArrayList<ProxiedPlayer>();
-								for (ProxiedPlayer player : HALBungee.getInstance().getProxy().getServers()
-										.get("hub_" + port1).getPlayers()) {
-									players.add(player);
-								}
-								for (int i = 0; i < 5; i++) {
-									ProxiedPlayer p = players.get(i);
-									ServerInfo target = HALBungee.getInstance().getProxy()
-											.getServerInfo("hub_" + port1);
-									p.connect(target);
-								}
-								continue;
-							} else {
-								triedHub++;
-								failedHub++;
-								howManymoreHubs++;
-								if (failedHub == triedHub) {
-									for (int i = 0; i < howManymoreHubs; i++) {
-										JSONObject startServer = new JSONObject();
-										startServer.put("action", "start");
-										startServer.put("serverType", "hub");
-										MainHalClientThread.getClient().send(startServer.toString());
-									}
-								}
-							}
-						} else {
-							continue;
-						}
+				System.out.println("STARTING A HUB");
+			} else if (Hubs.size() > howmanyhubsINTEGER) {
+				Boolean hasOneClosed = false;
+				for (String port : Hubs) {
+					if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size() == 0
+							&& hasOneClosed == false && HALBungee.getInstance().getSQL()
+									.getState(Integer.parseInt(port)).equalsIgnoreCase("online")) {
+						JSONObject stopOnSpigot = new JSONObject();
+						stopOnSpigot.put("action", "stop");
+						stopOnSpigot.put("serverPortOrName", port);
+						MainHalClientThread.getClient().send(stopOnSpigot.toString());
+						hasOneClosed = true;
+						System.out.println("STOPPING A HUB");
+						break;
 					}
-				} else if (HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size() == 0
-						&& Hubs.size() > 1) {
-					JSONObject stopOnSpigot = new JSONObject();
-					stopOnSpigot.put("action", "stop");
-					stopOnSpigot.put("serverPortOrName", port);
-					MainHalClientThread.getClient().send(stopOnSpigot.toString());
 				}
 			}
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
 		}
+
 	}
 }
