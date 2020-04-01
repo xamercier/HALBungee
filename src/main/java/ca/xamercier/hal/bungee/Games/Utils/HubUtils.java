@@ -21,7 +21,6 @@ public class HubUtils {
 		while (entries.hasNext()) {
 			Map.Entry entry = (Map.Entry) entries.next();
 			String name = (String) entry.getKey();
-			if (name.contains("hub_")) {
 				String splittedName = name;
 				String[] nameANDport;
 				String srvPort;
@@ -33,9 +32,6 @@ public class HubUtils {
 								.equalsIgnoreCase("online")) {
 					return name;
 				}
-			} else {
-				System.out.println("CRITICAL ERROR HubUtils");
-			}
 		}
 		return null;
 	}
