@@ -36,6 +36,11 @@ public class HubThread extends Thread {
 		}
 
 		while (true) {
+			try {
+				Thread.sleep(3500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			ArrayList<String> Hubs = new ArrayList<String>();
 			Hubs.clear();
 			Map<String, ServerInfo> map = HALBungee.getInstance().getProxy().getServers();
@@ -90,7 +95,6 @@ public class HubThread extends Thread {
 					}
 				}
 			}
-
 		}
 
 	}
