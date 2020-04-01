@@ -28,7 +28,7 @@ public class HubUtils {
 				nameANDport = splittedName.split("_");
 				srvPort = nameANDport[1];
 				if (name.contains("hub_")
-						&& HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 15
+						&& HALBungee.getInstance().getProxy().getServerInfo(name).getPlayers().size() < 20
 						&& HALBungee.getInstance().getSQL().getState(Integer.parseInt(srvPort))
 								.equalsIgnoreCase("online")) {
 					return name;

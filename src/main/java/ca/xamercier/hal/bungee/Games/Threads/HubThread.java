@@ -66,10 +66,10 @@ public class HubThread extends Thread {
 			}
 			double howmanyhubs;
 			howmanyhubs = playersInHubs * 1.6;
-			howmanyhubs = howmanyhubs / 15;
+			howmanyhubs = howmanyhubs / 19;
 			howmanyhubs = howmanyhubs + 1;
 			System.out.println("howmanyhubs: " + howmanyhubs);
-			int howmanyhubsINTEGER = (int) Math.ceil(howmanyhubs);
+			int howmanyhubsINTEGER = (int) Math.floor(howmanyhubs);
 			System.out.println("howmanyhubsINTEGER: " + howmanyhubsINTEGER);
 			if (Hubs.size() == howmanyhubsINTEGER) {
 				continue;
