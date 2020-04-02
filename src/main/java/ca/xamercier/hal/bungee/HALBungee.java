@@ -67,7 +67,7 @@ public class HALBungee extends Plugin {
         GameManagerStartThread GameManagerThread = new GameManagerStartThread();
         GameManagerThread.start();
 	}
-		
+
 	@Override
 	public void onDisable() {
 	}

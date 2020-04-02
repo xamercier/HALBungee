@@ -50,9 +50,11 @@ public class Events implements Listener {
 	@EventHandler
 	public void onDisconnectPlayerEvent(PlayerDisconnectEvent e) {
 		ProxiedPlayer p = e.getPlayer();
+		/*
 		if (HALBungee.waitingLine.containsKey(p)) {
 			HALBungee.waitingLine.remove(p);
 		}
+		*/
 		HALBungee.getInstance().getSQL().setPlayerServer(p, "");
 		HALBungee.getInstance().getSQL().setPlayerGameState(p, "Deconnecte");
 	}
