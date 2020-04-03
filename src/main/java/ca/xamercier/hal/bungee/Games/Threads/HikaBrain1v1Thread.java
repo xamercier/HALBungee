@@ -48,8 +48,6 @@ public class HikaBrain1v1Thread extends Thread {
 			e.printStackTrace();
 		}
 
-		
-		
 		while (true) {
 			try {
 				Thread.sleep(3500);
@@ -78,8 +76,6 @@ public class HikaBrain1v1Thread extends Thread {
 			}
 			removePlayers();
 
-			
-			
 			ArrayList<String> Hubs = new ArrayList<String>();
 			Hubs.clear();
 			Map<String, ServerInfo> map1 = HALBungee.getInstance().getProxy().getServers();
@@ -115,13 +111,12 @@ public class HikaBrain1v1Thread extends Thread {
 
 			System.out.println("howmanyHikaBrain1v1: " + howmanyHikaBrain1v1);
 			int howmanyHikaBrain1v1INTEGER = (int) Math.ceil(howmanyHikaBrain1v1);
-			//int howmanyHikaBrain1v1INTEGER = (int) Math.round(howmanyHikaBrain1v1);
+			// int howmanyHikaBrain1v1INTEGER = (int)
+			// Math.round(howmanyHikaBrain1v1);
 			System.out.println("howmanyHikaBrain1v1INTEGER: " + howmanyHikaBrain1v1INTEGER);
-			
-			
-			
-			
-			int minNumber = howmanyHikaBrain1v1INTEGER;
+
+			int minNumber = howmanyHikaBrain1v1INTEGER + 2;
+			System.out.println("Hika minNumber: " + minNumber);
 
 			ArrayList<String> StartedGames = new ArrayList<String>();
 			StartedGames.clear();
@@ -146,7 +141,7 @@ public class HikaBrain1v1Thread extends Thread {
 					String srvState = HALBungee.getInstance().getSQL().getState(Integer.parseInt(srvPort));
 					if (srvState.equalsIgnoreCase("WAITING")) {
 						DisponibleGames.add(srvPort);
-					} else if (srvState.equalsIgnoreCase("")) {
+					} else if (srvState.equalsIgnoreCase("BOOTING")) {
 						NotReadyGames.add(srvPort);
 					} else {
 						StartedGames.add(srvPort);
@@ -180,14 +175,12 @@ public class HikaBrain1v1Thread extends Thread {
 				continue;
 			}
 
-			/*
-			
 			ArrayList<String> HikaBrain1v1 = new ArrayList<String>();
 			HikaBrain1v1.clear();
-			Map<String, ServerInfo> map = HALBungee.getInstance().getProxy().getServers();
-			Iterator<Entry<String, ServerInfo>> entries = map.entrySet().iterator();
-			while (entries.hasNext()) {
-				Map.Entry entry = (Map.Entry) entries.next();
+			Map<String, ServerInfo> map11 = HALBungee.getInstance().getProxy().getServers();
+			Iterator<Entry<String, ServerInfo>> entries11 = map11.entrySet().iterator();
+			while (entries11.hasNext()) {
+				Map.Entry entry = (Map.Entry) entries11.next();
 				String name = (String) entry.getKey();
 				ServerInfo value = (ServerInfo) entry.getValue();
 				String srvType;
@@ -200,63 +193,8 @@ public class HikaBrain1v1Thread extends Thread {
 					HikaBrain1v1.add(srvPort);
 				}
 			}
-			int playersInHikaBrain1v1 = 0;
-			for (String port : HikaBrain1v1) {
-				playersInHikaBrain1v1 = playersInHikaBrain1v1 + HALBungee.getInstance().getProxy().getServers()
-						.get("HikaBrain1v1_" + port).getPlayers().size();
-			}
 
-			ArrayList<String> Hubs = new ArrayList<String>();
-			Hubs.clear();
-			Map<String, ServerInfo> map1 = HALBungee.getInstance().getProxy().getServers();
-			Iterator<Entry<String, ServerInfo>> entries1 = map1.entrySet().iterator();
-			while (entries1.hasNext()) {
-				Map.Entry entry = (Map.Entry) entries1.next();
-				String name = (String) entry.getKey();
-				ServerInfo value = (ServerInfo) entry.getValue();
-				String srvType;
-				String srvPort;
-				if (name.contains("hub_")) {
-					String[] nameANDport;
-					nameANDport = name.split("_");
-					srvType = nameANDport[0];
-					srvPort = nameANDport[1];
-					Hubs.add(srvPort);
-				}
-			}
-
-			double playersInHubs = 0;
-			for (String port : Hubs) {
-				playersInHubs = playersInHubs
-						+ HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size();
-			}
-
-			int howmanyHubINTEGER = 0;
-			howmanyHubINTEGER = (int) Math.round(playersInHubs);
-			howmanyHubINTEGER = howmanyHubINTEGER / 4;
-
-			double howmanyHikaBrain1v1;
-			howmanyHikaBrain1v1 = playersInHikaBrain1v1 / 2;
-			howmanyHikaBrain1v1 = howmanyHikaBrain1v1 + 2;
-
-			howmanyHikaBrain1v1 = howmanyHikaBrain1v1 + howmanyHubINTEGER;
-
-			System.out.println("howmanyHikaBrain1v1: " + howmanyHikaBrain1v1);
-			int howmanyHikaBrain1v1INTEGER = (int) Math.ceil(howmanyHikaBrain1v1);
-			//int howmanyHikaBrain1v1INTEGER = (int) Math.round(howmanyHikaBrain1v1);
-			System.out.println("howmanyHikaBrain1v1INTEGER: " + howmanyHikaBrain1v1INTEGER);
-
-			if (HikaBrain1v1.size() == howmanyHikaBrain1v1INTEGER) {
-				continue;
-
-			} else if (HikaBrain1v1.size() < howmanyHikaBrain1v1INTEGER) {
-				JSONObject startServer = new JSONObject();
-				startServer.put("action", "start");
-				startServer.put("serverType", "HikaBrain1v1");
-				MainHalClientThread.getClient().send(startServer.toString());
-				System.out.println("STARTING A HikaBrain1v1");
-
-			} else if (HikaBrain1v1.size() > howmanyHikaBrain1v1INTEGER) {
+			if (DisponibleGames.size() > minNumber + 1) {
 
 				Boolean hasOneClosed = false;
 				boolean isAHikaBrain1v1NotStarted = false;
@@ -285,11 +223,123 @@ public class HikaBrain1v1Thread extends Thread {
 					}
 
 				}
-			}
 
-			*/
-			
-			
+			}
 		}
 	}
 }
+
+
+
+
+
+
+
+/*
+
+ArrayList<String> HikaBrain1v1 = new ArrayList<String>();
+HikaBrain1v1.clear();
+Map<String, ServerInfo> map = HALBungee.getInstance().getProxy().getServers();
+Iterator<Entry<String, ServerInfo>> entries = map.entrySet().iterator();
+while (entries.hasNext()) {
+	Map.Entry entry = (Map.Entry) entries.next();
+	String name = (String) entry.getKey();
+	ServerInfo value = (ServerInfo) entry.getValue();
+	String srvType;
+	String srvPort;
+	if (name.contains("HikaBrain1v1_")) {
+		String[] nameANDport;
+		nameANDport = name.split("_");
+		srvType = nameANDport[0];
+		srvPort = nameANDport[1];
+		HikaBrain1v1.add(srvPort);
+	}
+}
+int playersInHikaBrain1v1 = 0;
+for (String port : HikaBrain1v1) {
+	playersInHikaBrain1v1 = playersInHikaBrain1v1 + HALBungee.getInstance().getProxy().getServers()
+			.get("HikaBrain1v1_" + port).getPlayers().size();
+}
+
+ArrayList<String> Hubs = new ArrayList<String>();
+Hubs.clear();
+Map<String, ServerInfo> map1 = HALBungee.getInstance().getProxy().getServers();
+Iterator<Entry<String, ServerInfo>> entries1 = map1.entrySet().iterator();
+while (entries1.hasNext()) {
+	Map.Entry entry = (Map.Entry) entries1.next();
+	String name = (String) entry.getKey();
+	ServerInfo value = (ServerInfo) entry.getValue();
+	String srvType;
+	String srvPort;
+	if (name.contains("hub_")) {
+		String[] nameANDport;
+		nameANDport = name.split("_");
+		srvType = nameANDport[0];
+		srvPort = nameANDport[1];
+		Hubs.add(srvPort);
+	}
+}
+
+double playersInHubs = 0;
+for (String port : Hubs) {
+	playersInHubs = playersInHubs
+			+ HALBungee.getInstance().getProxy().getServers().get("hub_" + port).getPlayers().size();
+}
+
+int howmanyHubINTEGER = 0;
+howmanyHubINTEGER = (int) Math.round(playersInHubs);
+howmanyHubINTEGER = howmanyHubINTEGER / 4;
+
+double howmanyHikaBrain1v1;
+howmanyHikaBrain1v1 = playersInHikaBrain1v1 / 2;
+howmanyHikaBrain1v1 = howmanyHikaBrain1v1 + 2;
+
+howmanyHikaBrain1v1 = howmanyHikaBrain1v1 + howmanyHubINTEGER;
+
+System.out.println("howmanyHikaBrain1v1: " + howmanyHikaBrain1v1);
+int howmanyHikaBrain1v1INTEGER = (int) Math.ceil(howmanyHikaBrain1v1);
+//int howmanyHikaBrain1v1INTEGER = (int) Math.round(howmanyHikaBrain1v1);
+System.out.println("howmanyHikaBrain1v1INTEGER: " + howmanyHikaBrain1v1INTEGER);
+
+if (HikaBrain1v1.size() == howmanyHikaBrain1v1INTEGER) {
+	continue;
+
+} else if (HikaBrain1v1.size() < howmanyHikaBrain1v1INTEGER) {
+	JSONObject startServer = new JSONObject();
+	startServer.put("action", "start");
+	startServer.put("serverType", "HikaBrain1v1");
+	MainHalClientThread.getClient().send(startServer.toString());
+	System.out.println("STARTING A HikaBrain1v1");
+
+} else if (HikaBrain1v1.size() > howmanyHikaBrain1v1INTEGER) {
+
+	Boolean hasOneClosed = false;
+	boolean isAHikaBrain1v1NotStarted = false;
+
+	for (String port : HikaBrain1v1) {
+		if (!HALBungee.getInstance().getSQL().getState(Integer.parseInt(port))
+				.equalsIgnoreCase("BOOTING")) {
+		} else {
+			isAHikaBrain1v1NotStarted = true;
+		}
+	}
+	if (isAHikaBrain1v1NotStarted == false) {
+		for (String port : HikaBrain1v1) {
+			if (HALBungee.getInstance().getProxy().getServers().get("HikaBrain1v1_" + port).getPlayers()
+					.size() == 0 && hasOneClosed == false
+					&& !HALBungee.getInstance().getSQL().getState(Integer.parseInt(port))
+							.equalsIgnoreCase("BOOTING")) {
+				JSONObject stopOnSpigot = new JSONObject();
+				stopOnSpigot.put("action", "stop");
+				stopOnSpigot.put("serverPortOrName", port);
+				MainHalClientThread.getClient().send(stopOnSpigot.toString());
+				hasOneClosed = true;
+				System.out.println("STOPPING A HikaBrain1v1");
+				break;
+			}
+		}
+
+	}
+}
+
+*/
