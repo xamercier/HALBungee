@@ -66,7 +66,7 @@ public class HikaBrain1v1Thread extends Thread {
 						}
 					}
 					try {
-						Thread.sleep(2000);
+						Thread.sleep(2800);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -110,9 +110,8 @@ public class HikaBrain1v1Thread extends Thread {
 			howmanyHikaBrain1v1 = howmanyHubINTEGER;
 
 			System.out.println("howmanyHikaBrain1v1: " + howmanyHikaBrain1v1);
-			int howmanyHikaBrain1v1INTEGER = (int) Math.ceil(howmanyHikaBrain1v1);
-			// int howmanyHikaBrain1v1INTEGER = (int)
-			// Math.round(howmanyHikaBrain1v1);
+			//int howmanyHikaBrain1v1INTEGER = (int) Math.ceil(howmanyHikaBrain1v1);
+			int howmanyHikaBrain1v1INTEGER = (int) Math.round(howmanyHikaBrain1v1);
 			System.out.println("howmanyHikaBrain1v1INTEGER: " + howmanyHikaBrain1v1INTEGER);
 
 			int minNumber = howmanyHikaBrain1v1INTEGER + 2;
@@ -223,8 +222,9 @@ public class HikaBrain1v1Thread extends Thread {
 					}
 
 				}
-
 			}
+			
+			
 		}
 	}
 }
