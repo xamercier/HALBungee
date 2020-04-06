@@ -28,7 +28,7 @@ public class Events implements Listener {
 
 		HALBungee.getInstance().getSQL().setPlayerServer(p, e.getServer().getInfo().getName());
 		/*
-		 * Se met pas bien a jour erreur a trouver...
+		 * Iterator doesn't return the good information to fix...
 		for(GameManager game : GameManager.values()) {
 			if(e.getServer().getInfo().getName().contains(game.getNameForEvents())) {
 				HALBungee.getInstance().getSQL().setPlayerGameState(p, game.getPlayerGameState());
@@ -50,9 +50,11 @@ public class Events implements Listener {
 	@EventHandler
 	public void onDisconnectPlayerEvent(PlayerDisconnectEvent e) {
 		ProxiedPlayer p = e.getPlayer();
+		/*
 		if (HALBungee.waitingLine.containsKey(p)) {
 			HALBungee.waitingLine.remove(p);
 		}
+		*/
 		HALBungee.getInstance().getSQL().setPlayerServer(p, "");
 		HALBungee.getInstance().getSQL().setPlayerGameState(p, "Deconnecte");
 	}

@@ -16,7 +16,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
  */
 public class HikaBrain1v1Utils {
 
-	@SuppressWarnings({ "rawtypes", "unused",})
+	@SuppressWarnings({ "rawtypes", "unused"})
 	public static String getCompGame(ProxiedPlayer p) {
 		ArrayList<String> FoundGames = new ArrayList<String>();
 		FoundGames.clear();
@@ -99,7 +99,7 @@ public class HikaBrain1v1Utils {
 			String srvPort;
 			srvType = nameANDport[0];
 			srvPort = nameANDport[1];
-			if (HALBungee.getInstance().getSQL().getPlayers(Integer.parseInt(srvPort)) == 0) {
+			if (HALBungee.getInstance().getProxy().getServerInfo(srvType + "_" + srvPort).getPlayers().size() == 0) {
 				ReturnedGames.add(name);
 				return name;
 			}
