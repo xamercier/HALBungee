@@ -96,9 +96,8 @@ public class SQL {
             rs.executeUpdate();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       
+			e.printStackTrace();
+		}
     }
     
 	public void setHubID(String port, String hub) {
